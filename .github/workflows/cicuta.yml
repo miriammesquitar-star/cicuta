@@ -31,7 +31,7 @@ jobs:
         python cicuta_kaggle.py
     
     - name: 💾 Salvar resultados
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: resultados-cicuta-${{ github.run_id }}
         path: ./resultados/
