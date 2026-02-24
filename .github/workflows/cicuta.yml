@@ -2,9 +2,8 @@ name: CICUTA 528Hz - RODA 24/7
 
 on:
   schedule:
-    # Roda a cada 8 horas (3x por dia)
     - cron: '0 */8 * * *'
-  workflow_dispatch:  # Permite rodar manualmente
+  workflow_dispatch:
 
 jobs:
   executar-cicuta:
@@ -21,7 +20,7 @@ jobs:
     
     - name: 📦 Instalar dependências
       run: |
-        pip install -r requirements.txt
+        pip install numpy
     
     - name: 🕐 Criar pasta para resultados
       run: |
@@ -35,5 +34,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: resultados-cicuta-${{ github.run_id }}
-        path: /home/runner/work/cicuta-528/cicuta-528/kaggle/working/resultados/
-        retention-days: 90  # Guarda por 90 dias
+        path: ./resultados/
+        retention-days: 90
