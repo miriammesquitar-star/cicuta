@@ -1,0 +1,39 @@
+name: CICUTA 528Hz - RODA 24/7
+
+on:
+  schedule:
+    # Roda a cada 8 horas (3x por dia)
+    - cron: '0 */8 * * *'
+  workflow_dispatch:  # Permite rodar manualmente
+
+jobs:
+  executar-cicuta:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Baixar código
+      uses: actions/checkout@v3
+    
+    - name: 🔧 Instalar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: 📦 Instalar dependências
+      run: |
+        pip install -r requirements.txt
+    
+    - name: 🕐 Criar pasta para resultados
+      run: |
+        mkdir -p resultados
+    
+    - name: ☠️ Executar CICUTA por 8 horas
+      run: |
+        python cicuta_kaggle.py
+    
+    - name: 💾 Salvar resultados
+      uses: actions/upload-artifact@v3
+      with:
+        name: resultados-cicuta-${{ github.run_id }}
+        path: /home/runner/work/cicuta-528/cicuta-528/kaggle/working/resultados/
+        retention-days: 90  # Guarda por 90 dias
